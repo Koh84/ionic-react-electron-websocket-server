@@ -26,7 +26,9 @@
     "electron-serve": "~1.1.0",
     "electron-unhandled": "~4.0.1",
     "electron-updater": "~5.0.1",
-    "electron-window-state": "~5.0.3"
+    "electron-window-state": "~5.0.3",
+    "isomorphic-ws": "^5.0.0",
+    "ws": "^8.11.0"
   },
   "devDependencies": {
     "electron": "^19.0.0",

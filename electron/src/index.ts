@@ -6,6 +6,9 @@ import electronIsDev from 'electron-is-dev';
 import unhandled from 'electron-unhandled';
 import { autoUpdater } from 'electron-updater';
 
+import { webSocketServer } from './services/websocket-server';
+import { consoleService } from './services/console-service';
+
 import { ElectronCapacitorApp, setupContentSecurityPolicy, setupReloadWatcher } from './setup';
 
 // Graceful handling of unhandled errors.
@@ -24,6 +27,8 @@ const capacitorFileConfig: CapacitorElectronConfig = getCapacitorElectronConfig(
 // Initialize our app. You can pass menu templates into the app here.
 // const myCapacitorApp = new ElectronCapacitorApp(capacitorFileConfig);
 const myCapacitorApp = new ElectronCapacitorApp(capacitorFileConfig, trayMenuTemplate, appMenuBarMenuTemplate);
+
+let mainWindow = null;
 
 // If deeplinking is enabled then we will set it up here.
 if (capacitorFileConfig.electron?.deepLinkingEnabled) {
@@ -47,6 +52,14 @@ if (electronIsDev) {
   await myCapacitorApp.init();
   // Check for updates if we are in a packaged app.
   autoUpdater.checkForUpdatesAndNotify();
+
+  mainWindow = myCapacitorApp.getMainWindow()
+  consoleService.setMainWindow(mainWindow);
+
+  mainWindow.once('ready-to-show', () => {
+    //tcpClient.setup();
+    webSocketServer.setup();
+  })
 })();
 
 // Handle when all of our windows are close (platforms have their own expectations).
