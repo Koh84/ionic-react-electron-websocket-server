@@ -15,12 +15,12 @@ class WebSocketService {
 
     setup() {
         consoleService.log('WebSocketService::setup');
-        let serverAddress = 'wss:' + Config.serverIp + ':' + Config.serverPort;
+        let serverAddress = 'ws:' + Config.serverIp + ':' + Config.serverPort;
         const ws = new WebSocket(serverAddress);
 
         ws.onopen = function open() {
             consoleService.log('connected');
-            ws.send(Date.now());
+            ws.send('A test message');
         };
 
         ws.onclose = function close() {
@@ -28,11 +28,11 @@ class WebSocketService {
         };
 
         ws.onmessage = function incoming(data) {
-            consoleService.log(`Roundtrip time: ${Date.now() - data.data} ms`);
+            consoleService.log('Data ' + data.data);
 
             setTimeout(function timeout() {
-                ws.send(Date.now());
-            }, 500);
+                ws.send('A test message');
+            }, 1000);
         };
     }
 }
