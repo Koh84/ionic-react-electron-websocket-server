@@ -6,6 +6,7 @@ import electronIsDev from 'electron-is-dev';
 import unhandled from 'electron-unhandled';
 import { autoUpdater } from 'electron-updater';
 
+import { webSocket } from './services/websocket';
 import { webSocketServer } from './services/websocket-server';
 import { consoleService } from './services/console-service';
 
@@ -57,8 +58,8 @@ if (electronIsDev) {
   consoleService.setMainWindow(mainWindow);
 
   mainWindow.once('ready-to-show', () => {
-    //tcpClient.setup();
-    webSocketServer.setup();
+    webSocket.setup();
+    //webSocketServer.setup();
   })
 })();
 
