@@ -58,8 +58,8 @@ if (electronIsDev) {
   consoleService.setMainWindow(mainWindow);
 
   mainWindow.once('ready-to-show', () => {
-    webSocket.setup();
-    //webSocketServer.setup();
+    //webSocket.setup();
+    webSocketServer.setup();
   })
 })();
 
